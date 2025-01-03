@@ -31,10 +31,6 @@ router.get(
 );
 
 router.get("/me", (req, res) => {
-  console.log(req.user, "user");
-  // console.log(req?.session, "Sessions");
-  // console.log(req?.sessionID, "session ID");
-  // console.log(req?.sessionStore, "store of session");
   res.json(req.user);
 });
 
