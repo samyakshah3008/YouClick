@@ -1,18 +1,21 @@
+"use client";
+
 import axios from "axios";
 import { useEffect, useState } from "react";
-import "./App.css";
+import "./index.css";
 
-function App() {
+const App = () => {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [user, setUser] = useState([]);
-  const loginWithGoogle = async () => {
+
+  const handleLogin = async () => {
     window.location.href = "http://localhost:4500/api/v1/auth/google";
   };
 
   const handleLogout = () => {
     axios.get("http://localhost:4500/api/v1/auth/logout").then((response) => {
-      console.log(response, "resss");
+      setIsLoggedIn(false);
       setUser([]);
-      // window.location.reload();
     });
   };
 
@@ -22,6 +25,9 @@ function App() {
         withCredentials: true,
       });
       setUser(res?.data[0]);
+      if (res?.data[0]?._id) {
+        setIsLoggedIn(true);
+      }
       console.log(res, "res");
     } catch (error) {
       console.log(error, "error");
@@ -29,43 +35,61 @@ function App() {
   };
 
   useEffect(() => {
-    // axios
-    //   .get("http://localhost:4500/api/v1/auth/me", {
-    //     withCredentials: true, // Make sure cookies are sent
-    //   })
-    //   .then((res) => {
-    //     console.log(res, "rejsss");
-    //     setUser(res.data);
-    //   });
     fetchUser();
   }, []);
 
   return (
-    // <div className="App">
-    //   hello
-    //   <button onClick={loginWithGoogle}>Login with Google</button>
-    // </div>
+    <div className="min-h-screen bg-gray-100">
+      <nav className="bg-white shadow-md p-4">
+        <div className="flex justify-between items-center container mx-auto">
+          <div className="text-2xl font-bold">👍 YouClick</div>
+          <a
+            href="http://your-marketing-webapp-url.com"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-sm font-medium text-gray-700 hover:text-green-500 transition-colors"
+          >
+            Go to Marketing
+          </a>
+        </div>
+      </nav>
 
-    <div className="h-screen">
-      <div className="flex justify-center items-center py-44">
-        {user?._id ? (
-          <button
-            onClick={handleLogout}
-            className="py-4 px-3 bg-red-500 text-white m-2"
-          >
-            Logout
-          </button>
+      <main className="flex flex-col items-center justify-center mt-20">
+        {isLoggedIn ? (
+          <div className="bg-white p-6 shadow-md rounded-lg text-center">
+            <h1 className="text-xl font-bold text-gray-800">
+              Welcome back to YouClick!
+            </h1>
+            <p className="text-gray-600 mt-2">
+              We're glad to have you logged in. Let's make the most of your
+              time.
+            </p>
+            <button
+              onClick={handleLogout}
+              className="mt-4 bg-red-500 text-white py-2 px-4 rounded-lg hover:bg-red-600 transition-all"
+            >
+              Logout
+            </button>
+          </div>
         ) : (
-          <button
-            onClick={loginWithGoogle}
-            className="py-4 px-3 bg-red-500 text-white m-2"
-          >
-            Login with Google
-          </button>
+          <div className="bg-white p-6 shadow-md rounded-lg text-center">
+            <h1 className="text-xl font-bold text-gray-800">
+              Welcome to YouClick!
+            </h1>
+            <p className="text-gray-600 mt-2">
+              Please log in to access your account and explore features.
+            </p>
+            <button
+              onClick={handleLogin}
+              className="mt-4 bg-green-500 text-white py-2 px-4 rounded-lg hover:bg-green-600 transition-all"
+            >
+              Login
+            </button>
+          </div>
         )}
-      </div>
+      </main>
     </div>
   );
-}
+};
 
 export default App;
