@@ -1,42 +1,7 @@
-chrome.runtime.sendMessage("I am loading content script", (response) => {
-  console.log(response);
-  console.log("I am content script");
-});
-
 window.onload = () => {
-  console.log("loaded on load script");
-
-  // makeApiCall();
   checkAndShowPopup();
 };
 
-function makeApiCall() {
-  chrome.runtime.sendMessage(
-    {
-      type: "API_CALL",
-      payload: {
-        url: "http://localhost:4500/api/v1/auth/hello",
-        method: "GET",
-        headers: {
-          // Authorization: "Bearer YOUR_ACCESS_TOKEN",
-          "Content-Type": "application/json",
-        },
-      },
-    },
-    (response) => {
-      console.log(response, "response main");
-      if (response.success) {
-        console.log("API Response:", response.data);
-        alert(`${response?.data} success from content`);
-      } else {
-        // alert("failure from content");
-        console.error("API Error:");
-      }
-    }
-  );
-}
-
-// Function to observe URL changes in SPAs
 function observeUrlChanges() {
   let lastUrl = window.location.href;
 
@@ -44,7 +9,6 @@ function observeUrlChanges() {
     const currentUrl = window.location.href;
     if (currentUrl !== lastUrl) {
       lastUrl = currentUrl;
-      console.log("URL changed to:", currentUrl);
       checkAndShowPopup();
     }
   });
@@ -52,106 +16,70 @@ function observeUrlChanges() {
   observer.observe(document.body, { childList: true, subtree: true });
 }
 
-// Function to handle the popup logic
 function checkAndShowPopup() {
   if (window.location.search.includes("?v=")) {
-    showPopup();
-    // getChannelId();
+    chrome.storage.local.get("accessToken", (data) => {
+      if (data.accessToken) {
+        showPopup();
+      } else {
+        showSessionExpiredPopup();
+      }
+    });
   }
-}
-
-function extractChannelHandle() {
-  const linkElements = document.querySelectorAll(
-    'span[itemprop="author"] a[itemprop="url"]'
-  );
-  for (const link of linkElements) {
-    const href = link.getAttribute("href");
-    if (href && href.startsWith("http://www.youtube.com/@")) {
-      return href.split("/@")[1]; // Extract the handle, e.g., 'ChandnaRecords'
-    }
-  }
-  return null;
 }
 
 function getChannelId() {
-  // Check if the URL contains "/channel/"
-  // if (window.location.href.includes("/channel/")) {
-  //   const match = window.location.href.match(/\/channel\/([^/?]+)/);
-  //   if (match) {
-  //     console.log("Extracted Channel ID from URL:", match[1]);
-  //     return match[1];
-  //   }
-  // }
-
-  // AIzaSyBjUc6_XRFUCZqQpxzUyC26rnznsJQYTfo
-
-  // Check for channel ID metadata on video pages
-
-  // const metaElement: any = document.querySelector('span[itemprop="author"]');
-  // console.log(metaElement, "meta element");
-  // if (metaElement) {
-  //   console.log("Extracted Channel ID from Metadata:", metaElement.content);
-  //   return metaElement.content;
-  // }
-
-  // console.warn("Channel ID not found on the current page.");
-  // return null;
-
   const authorSpan = document.querySelector('span[itemprop="author"]');
   if (authorSpan) {
     const linkElement: any = authorSpan.querySelector('link[itemprop="url"]');
     if (linkElement && linkElement.href) {
       const username = linkElement.href.split("@")[1];
-      console.log("Extracted Username:", username);
       return username;
-      // Fetch the channel ID using YouTube API
-      // const channelId = await fetchChannelIdFromUsername(username);
-      // return channelId;
     }
   }
-
-  console.warn("Channel username not found on the current page.");
   return null;
 }
 
-function subscribeToChannelLogic() {
-  const channelHandle = getChannelId(); // Extract the handle, e.g., '@ChandnaRecords'
+function showSessionExpiredPopup() {
+  if (document.getElementById("session-expired-popup")) return;
 
-  if (!channelHandle) {
-    console.error("Channel handle not found on the page.");
-    return;
-  }
+  const popup = document.createElement("div");
+  popup.id = "session-expired-popup";
+  popup.style.position = "fixed";
+  popup.style.top = "20px";
+  popup.style.right = "20px";
+  popup.style.width = "300px";
+  popup.style.padding = "20px";
+  popup.style.backgroundColor = "#fff";
+  popup.style.border = "1px solid #ccc";
+  popup.style.borderRadius = "5px";
+  popup.style.boxShadow = "0 4px 8px rgba(0,0,0,0.1)";
+  popup.style.zIndex = "9999";
 
-  chrome.storage.local.get("accessToken", (data) => {
-    console.log(data, "dataaa from content script");
-    if (data.accessToken) {
-      chrome.runtime.sendMessage(
-        {
-          type: "FETCH_CHANNEL_ID_AND_SUBSCRIBE",
-          payload: {
-            handle: channelHandle,
-            accessToken: data.accessToken,
-          },
-        },
-        (response) => {
-          console.log(response, "response of subscription.");
-          alert(response);
-          if (response.success) {
-            alert("Successfully subscribed to the channel!");
-            console.log("Subscription successful:", response.data);
-          } else {
-            console.error("Subscription failed:", response.error);
-            alert("Failed to subscribe. Check console for details.");
-          }
-        }
-      );
-    }
+  popup.innerHTML = `
+      <h3>Session Expired</h3>
+      <p>Your session has expired. Please log in to continue.</p>
+      <button id="login-link" style="color: red; text-decoration: underline;">Log in</button>
+      <button id="close-session-popup-btn" style="margin-top: 10px;">Close</button>
+  `;
+
+  document.body.appendChild(popup);
+
+  // Close button
+  document
+    .getElementById("close-session-popup-btn")
+    .addEventListener("click", () => {
+      popup.remove();
+    });
+
+  document.getElementById("login-link").addEventListener("click", () => {
+    popup.remove();
+    window.open("http://localhost:3000", "_blank");
   });
 }
 
-// Function to create and display a popup
 function showPopup() {
-  if (document.getElementById("youtube-extension-popup")) return; // Avoid duplicate popups
+  if (document.getElementById("youtube-extension-popup")) return;
 
   const popup = document.createElement("div");
   popup.id = "youtube-extension-popup";
@@ -167,38 +95,85 @@ function showPopup() {
   popup.style.zIndex = "9999";
 
   popup.innerHTML = `
-          <h3>Video Started</h3>
-          <p>This is a dummy popup for now. Add your features here.</p>
-          <button id="like-video-btn">Like Video</button>
-            <button id="comment-video-btn">Comment on Video</button>
-                      <button id="subscribe-btn">Subscribe</button>
-          <button id="close-popup-btn">Close</button>
-      `;
+      <h3>Video Actions</h3>
+      <div>
+          <input type="checkbox" id="like-checkbox"> Like<br>
+          <input type="checkbox" id="comment-checkbox"> Comment<br>
+          <input type="text" id="comment-input" placeholder="Enter your comment" value="Amazing video!" style="width: 100%; margin-top: 5px;" disabled><br>
+          <input type="checkbox" id="subscribe-checkbox"> Subscribe<br>
+      </div>
+      <button id="execute-actions-btn" disabled style="margin-top: 10px;">Execute</button>
+      <button id="close-popup-btn" style="margin-top: 10px;">Close</button>
+  `;
 
   document.body.appendChild(popup);
 
-  // Add event listener to like video button
-  document.getElementById("like-video-btn").addEventListener("click", () => {
-    likeVideo();
+  const likeCheckbox = document.getElementById(
+    "like-checkbox"
+  ) as HTMLInputElement;
+  const commentCheckbox = document.getElementById(
+    "comment-checkbox"
+  ) as HTMLInputElement;
+  const subscribeCheckbox = document.getElementById(
+    "subscribe-checkbox"
+  ) as HTMLInputElement;
+  const commentInput = document.getElementById(
+    "comment-input"
+  ) as HTMLInputElement;
+  const executeBtn = document.getElementById(
+    "execute-actions-btn"
+  ) as HTMLButtonElement;
+
+  commentCheckbox.addEventListener("change", () => {
+    commentInput.disabled = !commentCheckbox.checked;
+    updateExecuteButtonState();
   });
 
-  document.getElementById("comment-video-btn").addEventListener("click", () => {
-    commentVideo();
+  [likeCheckbox, commentCheckbox, subscribeCheckbox].forEach((checkbox) =>
+    checkbox.addEventListener("change", updateExecuteButtonState)
+  );
+
+  function updateExecuteButtonState() {
+    executeBtn.disabled = !(
+      likeCheckbox.checked ||
+      commentCheckbox.checked ||
+      subscribeCheckbox.checked
+    );
+  }
+
+  executeBtn.addEventListener("click", () => {
+    executeSelectedActions(commentInput.value);
+    popup.remove();
   });
 
-  document.getElementById("subscribe-btn").addEventListener("click", () => {
-    // console.log("Triggering Subscribe action for Channel:", channelId);
-    subscribeToChannelLogic();
-  });
-
-  // Add event listener to close button
   document.getElementById("close-popup-btn").addEventListener("click", () => {
     popup.remove();
   });
 }
 
-function commentVideo() {
-  const commentText = "Amazing video!";
+function executeSelectedActions(commentText) {
+  const likeChecked = (
+    document.getElementById("like-checkbox") as HTMLInputElement
+  ).checked;
+  const commentChecked = (
+    document.getElementById("comment-checkbox") as HTMLInputElement
+  ).checked;
+  const subscribeChecked = (
+    document.getElementById("subscribe-checkbox") as HTMLInputElement
+  ).checked;
+
+  if (likeChecked) {
+    likeVideo();
+  }
+  if (commentChecked) {
+    commentVideo(commentText);
+  }
+  if (subscribeChecked) {
+    subscribeToChannelLogic();
+  }
+}
+
+function commentVideo(commentText = "Amazing video!") {
   if (commentText) {
     const videoId = new URLSearchParams(window.location.search).get("v");
 
@@ -211,23 +186,26 @@ function commentVideo() {
           },
           (response) => {
             if (response.success) {
-              alert("Comment posted successfully!");
+              alert(
+                "Comment posted successfully! To see the comment, please refresh your browser and if you still don't see the comment, please wait for some time as youtube apis take some time to reflect."
+              );
             } else {
               console.error("Failed to post comment:", response.error);
-              alert("Failed to post comment.");
+              alert(`Failed to post comment. ${response?.error} `);
             }
           }
         );
+      } else {
+        alert("No access token found. Please authenticate first.");
       }
     });
   }
 }
 
 function likeVideo() {
-  const videoId = new URLSearchParams(window.location.search).get("v"); // Extract video ID from URL
+  const videoId = new URLSearchParams(window.location.search).get("v");
 
   chrome.storage.local.get("accessToken", (data) => {
-    console.log(data, "data from like video");
     if (data.accessToken) {
       chrome.runtime.sendMessage(
         {
@@ -238,13 +216,13 @@ function likeVideo() {
           },
         },
         (response) => {
-          console.log(response, "response from content script");
-          // alert(response);
           if (response.success) {
-            alert(`Video liked successfully! ${response?.videoId}`);
+            alert(
+              `Video liked successfully! To see liked video, please refresh your browser and if you still don't see the video liked, please wait for some time as youtube apis take some time to reflect."`
+            );
           } else {
             console.error("Failed to like the video:", response.error);
-            alert("Error liking the video.");
+            alert(`Error liking the video. ${response.error}`);
           }
         }
       );
@@ -254,5 +232,38 @@ function likeVideo() {
   });
 }
 
-// Start observing URL changes
+function subscribeToChannelLogic() {
+  const channelHandle = getChannelId();
+
+  if (!channelHandle) {
+    console.error("Channel handle not found on the page.");
+    return;
+  }
+
+  chrome.storage.local.get("accessToken", (data) => {
+    if (data.accessToken) {
+      chrome.runtime.sendMessage(
+        {
+          type: "FETCH_CHANNEL_ID_AND_SUBSCRIBE",
+          payload: {
+            handle: channelHandle,
+            accessToken: data.accessToken,
+          },
+        },
+        (response) => {
+          if (response.success) {
+            alert(
+              "Successfully subscribed to the channel! To see the subscribed status, please refresh your browser and if you still don't see channel subscribed, please wait for some time as youtube apis take some time to reflect."
+            );
+          } else {
+            alert(`Failed to subscribe. ${response?.error} `);
+          }
+        }
+      );
+    } else {
+      alert("No access token found. Please authenticate first.");
+    }
+  });
+}
+
 observeUrlChanges();
