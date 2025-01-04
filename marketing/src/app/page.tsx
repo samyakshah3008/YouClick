@@ -1,3 +1,5 @@
+"use client";
+
 import FAQs from "@/components/landing/faqs";
 import Features from "@/components/landing/features";
 import Footer from "@/components/landing/footer";
