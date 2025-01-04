@@ -21,13 +21,13 @@ export default function Navbar() {
         </div>
         <div className="flex flex-col lg:flex-row gap-2">
           <Button
-          // onClick={() => {
-          //   if (!window) return;
-          //   window.open(
-          //     "https://github.com/samyakshah3008/YouClick",
-          //     "_blank"
-          //   );
-          // }}
+            onClick={() => {
+              if (!window) return;
+              window.open(
+                "https://github.com/samyakshah3008/YouClick",
+                "_blank"
+              );
+            }}
           >
             <IconBrandGithub className="mr-2" /> Star on GitHub
           </Button>
