@@ -43,13 +43,13 @@ function Hero() {
             Request for Free Access 🚀
           </Button>
           <Button
-            onClick={() => {
-              if (!window) return;
-              window.open(
-                "https://github.com/samyakshah3008/YouClick",
-                "_blank"
-              );
-            }}
+            // onClick={() => {
+            //   if (!window) return;
+            //   window.open(
+            //     "https://github.com/samyakshah3008/YouClick",
+            //     "_blank"
+            //   );
+            // }}
             size="lg"
             variant="secondary"
           >

@@ -1,3 +1,5 @@
+"use client";
+
 import { faqItems } from "@/constants/landing-page";
 import { AccordionBlocks } from "../common/accordion-blocks";
 
