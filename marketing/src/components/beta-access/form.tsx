@@ -7,7 +7,7 @@ import { Loader } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
-const BetaAccessForm = ({ status = "pending" }: any) => {
+const BetaAccessForm = ({ status }: any) => {
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [loading, setLoading] = useState(true);
   const [formData, setFormData] = useState({
