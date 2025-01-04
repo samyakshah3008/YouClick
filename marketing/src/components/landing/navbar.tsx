@@ -1,9 +1,16 @@
 "use client";
 
 import { IconBrandGithub, IconThumbUp } from "@tabler/icons-react";
+import { useRouter } from "next/navigation";
 import { Button } from "../ui/button";
 
 export default function Navbar() {
+  const router = useRouter();
+
+  const goToBetaAccessHandler = () => {
+    router.push("/beta-access");
+  };
+
   return (
     <nav className="fixed top-0 w-full bg-white/80 backdrop-blur-md z-50 border-b border-gray-100">
       <div className="container mx-auto px-6 py-3 flex justify-between items-center">
@@ -26,7 +33,7 @@ export default function Navbar() {
           </Button>
           <Button
             variant="secondary"
-            onClick={() => {}}
+            onClick={goToBetaAccessHandler}
             className="hidden lg:block "
           >
             Request for Free Access 🚀

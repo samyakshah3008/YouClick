@@ -55,12 +55,12 @@ function Home() {
         <div className="flex justify-between items-center container mx-auto">
           <div className="text-2xl font-bold">👍 YouClick</div>
           <a
-            href="http://your-marketing-webapp-url.com"
+            href="#"
             target="_blank"
             rel="noopener noreferrer"
-            className="text-sm font-medium text-gray-700 hover:text-green-500 transition-colors"
+            className=" font-medium text-gray-700 hover:text-red-500 transition-colors"
           >
-            Go to Marketing
+            How to use YouClick - Guide
           </a>
         </div>
       </nav>

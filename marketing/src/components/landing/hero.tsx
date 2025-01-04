@@ -2,11 +2,18 @@
 
 import { IconBrandGithub } from "@tabler/icons-react";
 import Lottie from "lottie-react";
+import { useRouter } from "next/navigation";
 import LandingPageDart from "../../../public/you-tube-logo-animation.json";
 import { Button } from "../ui/button";
 import { Highlight } from "../ui/hero-highlight";
 
 function Hero() {
+  const router = useRouter();
+
+  const goToBetaAccessHandler = () => {
+    router.push("/beta-access");
+  };
+
   return (
     <main className="container mx-auto px-6 pt-20">
       <div className="max-w-4xl mx-auto text-center">
@@ -32,7 +39,7 @@ function Hero() {
         </p>
 
         <div className="my-6 flex flex-wrap justify-center gap-4">
-          <Button onClick={() => {}} size="lg">
+          <Button onClick={goToBetaAccessHandler} size="lg">
             Request for Free Access 🚀
           </Button>
           <Button

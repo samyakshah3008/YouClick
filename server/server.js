@@ -8,6 +8,8 @@ const connectDB = require("./src/config/db.js");
 const cookieSession = require("cookie-session");
 
 const authentication = require("./src/routes/auth.route.js");
+const betaAccessRouter = require("./src/routes/beta-access.route.js");
+
 const passport = require("passport");
 
 connectDB();
@@ -53,6 +55,7 @@ app.use(passport.session());
 app.use(express.urlencoded({ extended: true, limit: "16kb" }));
 
 app.use("/api/v1/auth", authentication);
+app.use("/api/v1/beta-access", betaAccessRouter);
 
 app.listen("4500", () => {
   console.log("server connected.");

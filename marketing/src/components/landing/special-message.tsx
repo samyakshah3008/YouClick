@@ -29,7 +29,7 @@ const SpecialMessage = () => {
           <div className="text-center w-[90%]">
             I am Samyak Shah, builder from India. I hope you are doing
             absolutely well. I hope you will love to use YouClick and it will
-            help your favorite youtube get that appreciation he/she deserves!
+            help your favorite youtuber get that appreciation he/she deserves!
             Please note that we are in initial phase of development and
             constantly improving. If you find any bugs or have feature requests,
             please do so. You can join our{" "}
