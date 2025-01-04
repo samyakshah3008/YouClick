@@ -2,11 +2,12 @@
 
 import { IconArrowBack } from "@tabler/icons-react";
 import axios from "axios";
+import { setCookie } from "cookies-next";
 import { Loader } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
-const BetaAccessForm = () => {
+const BetaAccessForm = ({ status }: any) => {
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [loading, setLoading] = useState(true);
   const [formData, setFormData] = useState({
@@ -19,10 +20,7 @@ const BetaAccessForm = () => {
   const router = useRouter();
 
   useEffect(() => {
-    const submittedStatus = document.cookie
-      .split("; ")
-      .find((row) => row.startsWith("submitted="));
-    if (submittedStatus && submittedStatus.split("=")[1] === "true") {
+    if (status == "pending") {
       setIsSubmitted(true);
     }
     setLoading(false);
@@ -35,7 +33,9 @@ const BetaAccessForm = () => {
         "http://localhost:4500/api/v1/beta-access/submit",
         formData
       );
-      document.cookie = "submitted=true; max-age=864000000";
+      setCookie("status", "pending", {
+        maxAge: 60 * 60 * 24 * 365 * 10,
+      });
       setIsSubmitted(true);
       router.push("/");
     } catch (error) {
