@@ -25,8 +25,7 @@ passport.use(
     {
       clientID: process.env.client_id_final,
       clientSecret: process.env.client_secret_final,
-      callbackURL:
-        "https://https://you-click-server.vercel.app/api/v1/auth/google/callback",
+      callbackURL: "/api/v1/auth/google/callback",
       scope: [
         "email",
         "profile",
@@ -35,7 +34,7 @@ passport.use(
     },
     async (accessToken, refreshToken, profile, done) => {
       try {
-        console.log('passport entry')
+        console.log("passport entry");
         const existingUser = await User.findOne({ googleId: profile.id });
 
         if (existingUser) {
