@@ -26,7 +26,7 @@ passport.use(
       clientID: process.env.client_id_final,
       clientSecret: process.env.client_secret_final,
       callbackURL:
-        "https://you-click-dashboard.vercel.app/api/v1/auth/google/callback",
+        "https://https://you-click-server.vercel.app/api/v1/auth/google/callback",
       scope: [
         "email",
         "profile",

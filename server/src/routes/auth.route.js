@@ -15,7 +15,7 @@ router.get(
     // successRedirect: "http://localhost:3000",
     // failureRedirect: "http://localhost:3000",
     successRedirect: "https://you-click-dashboard.vercel.app",
-    failureRedirect: "https://you-click-dashboard.vercel.app",
+    failureRedirect: "https://you-click-dashboard.vercel.app/failure",
   })
 );
 
@@ -30,7 +30,8 @@ router.get(
     // successRedirect: "http://localhost:3000",
     // failureRedirect: "http://localhost:3000",
     successRedirect: "https://you-click-dashboard.vercel.app",
-    failureRedirect: "https://you-click-dashboard.vercel.app",
+    failureRedirect: "https://you-click-dashboard.vercel.app/failure",
+    failWithError: true,
   })
 );
 
