@@ -35,6 +35,7 @@ passport.use(
     },
     async (accessToken, refreshToken, profile, done) => {
       try {
+        console.log('passport entry')
         const existingUser = await User.findOne({ googleId: profile.id });
 
         if (existingUser) {
@@ -63,6 +64,7 @@ passport.use(
         await newUser.save();
         return done(null, newUser);
       } catch (error) {
+        console.log(error, "error from passport");
         return done(error, null);
       }
     }
