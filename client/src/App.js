@@ -9,21 +9,35 @@ const App = () => {
   const [user, setUser] = useState([]);
 
   const handleLogin = async () => {
-    window.location.href = "http://localhost:4500/api/v1/auth/google";
+    // window.location.href = "http://localhost:4500/api/v1/auth/google";
+    window.location.href =
+      "https://you-click-server.vercel.app/api/v1/auth/google";
   };
 
   const handleLogout = () => {
-    axios.get("http://localhost:4500/api/v1/auth/logout").then((response) => {
-      setIsLoggedIn(false);
-      setUser([]);
-    });
+    // axios.get("http://localhost:4500/api/v1/auth/logout").then((response) => {
+    //   setIsLoggedIn(false);
+    //   setUser([]);
+    // });
+    axios
+      .get("https://you-click-server.vercel.app/api/v1/auth/logout")
+      .then((response) => {
+        setIsLoggedIn(false);
+        setUser([]);
+      });
   };
 
   const fetchUser = async () => {
     try {
-      const res = await axios.get("http://localhost:4500/api/v1/auth/me", {
-        withCredentials: true,
-      });
+      // const res = await axios.get("http://localhost:4500/api/v1/auth/me", {
+      //   withCredentials: true,
+      // });
+      const res = await axios.get(
+        "https://you-click-server.vercel.app/api/v1/auth/me",
+        {
+          withCredentials: true,
+        }
+      );
       setUser(res?.data[0]);
       if (res?.data[0]?._id) {
         setIsLoggedIn(true);
@@ -44,7 +58,7 @@ const App = () => {
         <div className="flex justify-between items-center container mx-auto">
           <div className="text-2xl font-bold">👍 YouClick</div>
           <a
-            href="#"
+            href="https://you-click.vercel.app"
             target="_blank"
             rel="noopener noreferrer"
             className=" font-medium text-gray-700 hover:text-red-500 transition-colors"
