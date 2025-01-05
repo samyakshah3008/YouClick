@@ -12,8 +12,10 @@ router.get(
       "email",
       "https://www.googleapis.com/auth/youtube.force-ssl",
     ],
-    successRedirect: "http://localhost:3000",
-    failureRedirect: "http://localhost:3000/failure",
+    // successRedirect: "http://localhost:3000",
+    // failureRedirect: "http://localhost:3000",
+    successRedirect: "https://you-click-dashboard.vercel.app",
+    failureRedirect: "https://you-click-dashboard.vercel.app",
   })
 );
 
@@ -25,8 +27,10 @@ router.get(
       "email",
       "https://www.googleapis.com/auth/youtube.force-ssl",
     ],
-    successRedirect: "http://localhost:3000",
-    failureRedirect: "http://localhost:3000/failure",
+    // successRedirect: "http://localhost:3000",
+    // failureRedirect: "http://localhost:3000",
+    successRedirect: "https://you-click-dashboard.vercel.app",
+    failureRedirect: "https://you-click-dashboard.vercel.app",
   })
 );
 
