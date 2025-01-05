@@ -1,7 +1,7 @@
 {
   "name": "you-click",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "server.js",
   "repository": "https://github.com/samyakshah3008/you-click.git",
   "author": "Samyak Shah <samyakshah3008@gmail.com>",
   "license": "MIT",
