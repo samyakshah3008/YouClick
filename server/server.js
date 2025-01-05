@@ -21,7 +21,10 @@ var whitelist = [
   "http://localhost:3000",
   "http://localhost:4500/api/v1/auth/me",
   "http://localhost:4500/api/v1/auth/logout",
-  "chrome-extension://onjmbpjhbgiojmhodfjlciihngghpmia/",
+  "https://you-click-dashboard.vercel.app",
+  "https://you-click-server.vercel.app",
+  "https://you-click-server.vercel.app/api/v1/auth/me",
+  "https://you-click-server.vercel.app/api/v1/auth/logout",
 ];
 
 var corsOptions = {

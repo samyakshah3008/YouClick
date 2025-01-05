@@ -5,20 +5,33 @@ function Home() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   const handleLogin = () => {
+    // chrome.tabs.create({
+    //   url: "http://localhost:4500/api/v1/auth/google",
+    //   selected: true,
+    //   active: true,
+    // });
     chrome.tabs.create({
-      url: "http://localhost:4500/api/v1/auth/google",
+      url: "https://you-click-server.vercel.app/api/v1/auth/google",
       selected: true,
       active: true,
     });
   };
 
   const handleLogout = () => {
-    axios.get("http://localhost:4500/api/v1/auth/logout").then((response) => {
-      chrome.storage.local.remove("accessToken", () => {
-        console.log("Access token removed from storage.");
+    // axios.get("http://localhost:4500/api/v1/auth/logout").then((response) => {
+    //   chrome.storage.local.remove("accessToken", () => {
+    //     console.log("Access token removed from storage.");
+    //   });
+    //   window.location.reload();
+    // });
+    axios
+      .get("https://you-click-server.vercel.app/api/v1/auth/logout")
+      .then((response) => {
+        chrome.storage.local.remove("accessToken", () => {
+          console.log("Access token removed from storage.");
+        });
+        window.location.reload();
       });
-      window.location.reload();
-    });
   };
 
   useEffect(() => {
@@ -26,7 +39,10 @@ function Home() {
       console.log("Access token removed from storage.");
     });
     axios
-      .get("http://localhost:4500/api/v1/auth/me", {
+      // .get("http://localhost:4500/api/v1/auth/me", {
+      //   withCredentials: true,
+      // })
+      .get("https://you-click-server.vercel.app/api/v1/auth/me", {
         withCredentials: true,
       })
       .then((res) => {
@@ -55,7 +71,7 @@ function Home() {
         <div className="flex justify-between items-center container mx-auto">
           <div className="text-2xl font-bold">👍 YouClick</div>
           <a
-            href="#"
+            href="https://you-click.vercel.app/"
             target="_blank"
             rel="noopener noreferrer"
             className=" font-medium text-gray-700 hover:text-red-500 transition-colors"
