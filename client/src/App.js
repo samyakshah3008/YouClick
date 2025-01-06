@@ -23,20 +23,19 @@ const App = () => {
   };
 
   const fetchUser = async () => {
-    try {
-      const res = await axios.get(
-        "https://you-click-server.vercel.app/api/v1/auth/me",
-        {
-          withCredentials: true,
+    const res = await axios
+      .get("https://you-click-server.vercel.app/api/v1/auth/me", {
+        withCredentials: true,
+      })
+      .then((res) => {
+        setUser(res?.data[0]);
+        if (res?.data[0]?._id) {
+          setIsLoggedIn(true);
         }
-      );
-      setUser(res?.data[0]);
-      if (res?.data[0]?._id) {
-        setIsLoggedIn(true);
-      }
-    } catch (error) {
-      console.log(error);
-    }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   useEffect(() => {
@@ -70,6 +69,7 @@ const App = () => {
                 We're glad to have you logged in. Let's make the most of your
                 time.
               </p>
+
               <button
                 onClick={handleLogout}
                 className="mt-4 bg-red-500 text-white py-2 px-4 rounded-lg hover:bg-red-600 transition-all"
