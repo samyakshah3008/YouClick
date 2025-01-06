@@ -30,7 +30,7 @@ const BetaAccessForm = ({ status }: any) => {
     e.preventDefault();
     try {
       await axios.post(
-        "http://localhost:4500/api/v1/beta-access/submit",
+        "https://you-click-server.vercel.app/api/v1/beta-access/submit",
         formData
       );
       setCookie("status", "pending", {
