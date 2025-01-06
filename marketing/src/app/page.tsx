@@ -4,6 +4,7 @@ import FAQs from "@/components/landing/faqs";
 import Features from "@/components/landing/features";
 import Footer from "@/components/landing/footer";
 import Hero from "@/components/landing/hero";
+import LoomSection from "@/components/landing/loom-section";
 import Navbar from "@/components/landing/navbar";
 import SpecialMessage from "@/components/landing/special-message";
 import WelcomeContributors from "@/components/landing/welcome-contributors";
@@ -15,6 +16,7 @@ export default function Home() {
       <Navbar />
       <Hero />
       <WhySection />
+      <LoomSection />
       <Features />
       <FAQs />
       <WelcomeContributors />
