@@ -143,7 +143,14 @@ const BetaAccessForm = ({ status }: any) => {
             }
           />
           <label htmlFor="starredRepo" className="text-gray-700">
-            Have you starred the repo?
+            Have you starred the repo? Please do so{" "}
+            <a
+              href="https://github.com/samyakshah3008/YouClick"
+              target="_blank"
+              className="text-red-500"
+            >
+              here
+            </a>
           </label>
         </div>
         <button
