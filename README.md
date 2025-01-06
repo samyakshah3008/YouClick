@@ -33,38 +33,38 @@ Check out this short Loom video to understand better:
 
 1. Go over https://github.com/samyakshah3008/YouClick and click on code and click on download ZIP
 
-![alt text](image.png)
+![alt text](./marketing/public/image.png)
 
 2. Uncompress zip folder
 
 3. Go to your browser's extension location and turn on developer mode
-   ![alt text](image-1.png)
+   ![alt text](./marketing/public/image-1.png)
 
 4. Click on load unpacked
-   ![alt text](image-2.png)
+   ![alt text](./marketing/public/image-2.png)
 
 5. Go to uncompressed folder location and you should see four folders
 
-![alt text](image-3.png)
+![alt text](./marketing/public/image-3.png)
 
 6. Click on extension
 
 7. Click on dist
-   ![alt text](image-4.png)
+   ![alt text](./marketing/public/image-4.png)
 
 8. Hit enter or select folder button
 
-![alt text](image-5.png)
+![alt text](./marketing/public/image-5.png)
 
 9. You will see this
 
-![alt text](image-6.png)
+![alt text](./marketing/public/image-6.png)
 
 10. Now create a new tab in your browser, if you have any other extension, you will get a popup - click on "keep it"
 
 11. You will see this then -
 
-![alt text](image-7.png)
+![alt text](./marketing/public/image-7.png)
 
 12. Read instructions and login to a google account which is same as YouTube account which you want to execute these actions. (If you don't have a beta access - please fill this form today as YouClick is on test mode and not available on Chrome Web Store - <a href="https://you-click.vercel.app/beta-access" target="_blank">here</a>)
 
@@ -72,7 +72,7 @@ Check out this short Loom video to understand better:
 
 14. Now, go to YouTube and go over any YouTube video, you will get this popup
 
-![alt text](image-8.png)
+![alt text](./marketing/public/image-8.png)
 
 check boxes which you want and click on execute.
 
