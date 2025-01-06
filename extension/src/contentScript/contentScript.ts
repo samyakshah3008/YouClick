@@ -57,8 +57,8 @@ function showSessionExpiredPopup() {
   popup.style.zIndex = "9999";
 
   popup.innerHTML = `
-      <h3>Session Expired</h3>
-      <p>Your session has expired. Please log in to continue.</p>
+      <h3>YouClick Session Expired</h3>
+      <p>Your YouClick session has expired. Please log in to continue.</p>
       <button id="login-link" style="color: red; text-decoration: underline;">Log in</button>
       <button id="close-session-popup-btn" style="margin-top: 10px;">Close</button>
   `;
@@ -74,7 +74,7 @@ function showSessionExpiredPopup() {
 
   document.getElementById("login-link").addEventListener("click", () => {
     popup.remove();
-    window.open("http://localhost:3000", "_blank");
+    window.open("https://you-click-dashboard.vercel.app/", "_blank");
   });
 }
 
