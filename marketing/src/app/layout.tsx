@@ -16,7 +16,7 @@ export const metadata: Metadata = {
     url: "https://you-click.vercel.app/",
     images: [
       {
-        url: "https://https://you-click.vercel.app/thumbnail-you-click.png",
+        url: "https://you-click.vercel.app/thumbnail-you-click.png",
         width: 1200,
         height: 630,
         alt: "YouClick Preview",
