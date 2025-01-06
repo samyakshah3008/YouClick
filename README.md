@@ -14,6 +14,70 @@ You might have heard youtuber requesting you to like, comment and subscribe to t
 
 All under "one single click"
 
+## How to Install YouClick Chrome Extension Guide
+
+Check out this short Loom video to understand better:
+
+<div>
+    <a target="_blank" href="https://www.loom.com/share/af6b23ec74714221be0d28f8b2c68670">
+      <p>YouClick Demo and Install Guide - Watch Video</p>
+    </a>
+    <a target="_blank" href="https://www.loom.com/share/af6b23ec74714221be0d28f8b2c68670">
+      <img style="max-width:300px;" src="https://cdn.loom.com/sessions/thumbnails/af6b23ec74714221be0d28f8b2c68670-6453347996367d10-full-play.gif">
+    </a>
+  </div>
+
+  <br/>
+
+## Installation Guide Steps if you don't want to prefer video:
+
+1. Go over https://github.com/samyakshah3008/YouClick and click on code and click on download ZIP
+
+![alt text](image.png)
+
+2. Uncompress zip folder
+
+3. Go to your browser's extension location and turn on developer mode
+   ![alt text](image-1.png)
+
+4. Click on load unpacked
+   ![alt text](image-2.png)
+
+5. Go to uncompressed folder location and you should see four folders
+
+![alt text](image-3.png)
+
+6. Click on extension
+
+7. Click on dist
+   ![alt text](image-4.png)
+
+8. Hit enter or select folder button
+
+![alt text](image-5.png)
+
+9. You will see this
+
+![alt text](image-6.png)
+
+10. Now create a new tab in your browser, if you have any other extension, you will get a popup - click on "keep it"
+
+11. You will see this then -
+
+![alt text](image-7.png)
+
+12. Read instructions and login to a google account which is same as YouTube account which you want to execute these actions. (If you don't have a beta access - please fill this form today as YouClick is on test mode and not available on Chrome Web Store - <a href="https://you-click.vercel.app/beta-access" target="_blank">here</a>)
+
+13. Once you successfully login, don't forget to create a new tab to start a new session of 1 hour.
+
+14. Now, go to YouTube and go over any YouTube video, you will get this popup
+
+![alt text](image-8.png)
+
+check boxes which you want and click on execute.
+
+15. To confirm that video is liked and commented, you can refresh the browser to confirm.
+
 ## FAQs:
 
 1. **I am not able to login to YouClick**
