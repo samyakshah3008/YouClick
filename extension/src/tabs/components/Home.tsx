@@ -32,9 +32,6 @@ function Home() {
           console.log("Access token removed from storage.");
         });
         window.location.reload();
-      })
-      .finally(() => {
-        setLoading(false);
       });
   };
 
@@ -65,6 +62,9 @@ function Home() {
             console.log("token already present");
           }
         });
+      })
+      .finally(() => {
+        setLoading(false);
       });
   }, []);
 
