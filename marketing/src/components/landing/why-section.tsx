@@ -4,7 +4,7 @@ const WhySection = () => {
       <div className="text-center text-gray-900 font-bold text-xl underline">
         WHY behind YouClick!
       </div>
-      <div className="">
+      <div className="text-center">
         You might have heard youtuber requesting you to like, comment and
         subscribe to their channel, ever wonder why they tell you in each
         video?? because we tend to binge watch and forget to shower the support

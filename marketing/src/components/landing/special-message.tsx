@@ -35,7 +35,11 @@ const SpecialMessage = () => {
             Please note that we are in initial phase of development and
             constantly improving. If you find any bugs or have feature requests,
             please do so. You can join our{" "}
-            <a href="#" target="_blank" className="text-red-500">
+            <a
+              href="https://discord.gg/8FZp4crz"
+              target="_blank"
+              className="text-red-500"
+            >
               discord community server
             </a>{" "}
             and we would love to here from you! 💝
