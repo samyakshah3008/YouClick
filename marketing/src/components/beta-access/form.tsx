@@ -16,6 +16,7 @@ const BetaAccessForm = ({ status }: any) => {
     favoriteYoutuber: "",
     starredRepo: false,
   });
+  const [formLoading, setFormLoading] = useState(false);
 
   const router = useRouter();
 
@@ -29,6 +30,7 @@ const BetaAccessForm = ({ status }: any) => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
+      setFormLoading(true);
       await axios.post(
         "https://you-click-server.vercel.app/api/v1/beta-access/submit",
         formData
@@ -40,6 +42,8 @@ const BetaAccessForm = ({ status }: any) => {
       router.push("/");
     } catch (error) {
       console.error("Error submitting the form", error);
+    } finally {
+      setFormLoading(false);
     }
   };
 
@@ -78,88 +82,94 @@ const BetaAccessForm = ({ status }: any) => {
 
   return (
     <div className="flex flex-col gap-10 items-center justify-center h-screen bg-gray-100">
-      <div
-        onClick={goBackHandler}
-        className="flex gap-2 text-red-500 font-semibold underline cursor-pointer"
-      >
-        {" "}
-        <IconArrowBack /> Go back
-      </div>
-
-      <form
-        onSubmit={handleSubmit}
-        className="bg-white shadow-md rounded-lg p-6 max-w-md w-full space-y-4"
-      >
-        <h1 className="text-2xl font-bold text-center text-gray-800">
-          Beta Access Form
-        </h1>
-        <div>
-          <label className="block text-gray-700 font-medium">Email</label>
-          <input
-            type="email"
-            required
-            className="mt-1 block w-full px-4 py-2 border rounded-md shadow-sm focus:ring-red-500 focus:border-red-500"
-            value={formData.email}
-            onChange={(e) =>
-              setFormData({ ...formData, email: e.target.value })
-            }
-          />
-        </div>
-        <div>
-          <label className="block text-gray-700 font-medium">
-            How do you plan to use YouClick?
-          </label>
-          <textarea
-            required
-            className="mt-1 block w-full px-4 py-2 border rounded-md shadow-sm focus:ring-red-500 focus:border-red-500"
-            value={formData.useCase}
-            onChange={(e) =>
-              setFormData({ ...formData, useCase: e.target.value })
-            }
-          ></textarea>
-        </div>
-        <div>
-          <label className="block text-gray-700 font-medium">
-            Who is your favorite YouTuber?
-          </label>
-          <input
-            type="text"
-            required
-            className="mt-1 block w-full px-4 py-2 border rounded-md shadow-sm focus:ring-red-500 focus:border-red-500"
-            value={formData.favoriteYoutuber}
-            onChange={(e) =>
-              setFormData({ ...formData, favoriteYoutuber: e.target.value })
-            }
-          />
-        </div>
-        <div className="flex items-center space-x-2">
-          <input
-            type="checkbox"
-            id="starredRepo"
-            className="h-4 w-4 text-red-600 focus:ring-red-500 border-gray-300 rounded"
-            checked={formData.starredRepo}
-            onChange={(e) =>
-              setFormData({ ...formData, starredRepo: e.target.checked })
-            }
-          />
-          <label htmlFor="starredRepo" className="text-gray-700">
-            Have you starred the repo? Please do so{" "}
-            <a
-              href="https://github.com/samyakshah3008/YouClick"
-              target="_blank"
-              className="text-red-500"
+      {formLoading ? (
+        <div>Please wait...</div>
+      ) : (
+        <>
+          <div
+            onClick={goBackHandler}
+            className="flex gap-2 text-red-500 font-semibold underline cursor-pointer"
+          >
+            {" "}
+            <IconArrowBack /> Go back
+          </div>
+          <form
+            onSubmit={handleSubmit}
+            className="bg-white shadow-md rounded-lg p-6 max-w-md w-full space-y-4"
+          >
+            <h1 className="text-2xl font-bold text-center text-gray-800">
+              Beta Access Form
+            </h1>
+            <div>
+              <label className="block text-gray-700 font-medium">Email</label>
+              <input
+                type="email"
+                required
+                className="mt-1 block w-full px-4 py-2 border rounded-md shadow-sm focus:ring-red-500 focus:border-red-500"
+                value={formData.email}
+                onChange={(e) =>
+                  setFormData({ ...formData, email: e.target.value })
+                }
+              />
+            </div>
+            <div>
+              <label className="block text-gray-700 font-medium">
+                How do you plan to use YouClick?
+              </label>
+              <textarea
+                required
+                className="mt-1 block w-full px-4 py-2 border rounded-md shadow-sm focus:ring-red-500 focus:border-red-500"
+                value={formData.useCase}
+                onChange={(e) =>
+                  setFormData({ ...formData, useCase: e.target.value })
+                }
+              ></textarea>
+            </div>
+            <div>
+              <label className="block text-gray-700 font-medium">
+                Who is your favorite YouTuber?
+              </label>
+              <input
+                type="text"
+                required
+                className="mt-1 block w-full px-4 py-2 border rounded-md shadow-sm focus:ring-red-500 focus:border-red-500"
+                value={formData.favoriteYoutuber}
+                onChange={(e) =>
+                  setFormData({ ...formData, favoriteYoutuber: e.target.value })
+                }
+              />
+            </div>
+            <div className="flex items-center space-x-2">
+              <input
+                type="checkbox"
+                id="starredRepo"
+                className="h-4 w-4 text-red-600 focus:ring-red-500 border-gray-300 rounded"
+                checked={formData.starredRepo}
+                onChange={(e) =>
+                  setFormData({ ...formData, starredRepo: e.target.checked })
+                }
+              />
+              <label htmlFor="starredRepo" className="text-gray-700">
+                Have you starred the repo? Please do so{" "}
+                <a
+                  href="https://github.com/samyakshah3008/YouClick"
+                  target="_blank"
+                  className="text-red-500"
+                >
+                  here
+                </a>
+              </label>
+            </div>
+            <button
+              disabled={formLoading}
+              type="submit"
+              className="w-full bg-red-600 text-white py-2 px-4 rounded-md hover:bg-red-700 focus:outline-none focus:ring focus:ring-red-300"
             >
-              here
-            </a>
-          </label>
-        </div>
-        <button
-          type="submit"
-          className="w-full bg-red-600 text-white py-2 px-4 rounded-md hover:bg-red-700 focus:outline-none focus:ring focus:ring-red-300"
-        >
-          Submit
-        </button>
-      </form>
+              Submit
+            </button>
+          </form>
+        </>
+      )}
     </div>
   );
 };
