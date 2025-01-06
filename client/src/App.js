@@ -6,6 +6,7 @@ import "./index.css";
 
 const App = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [user, setUser] = useState([]);
 
   const handleLogin = async () => {
@@ -29,12 +30,15 @@ const App = () => {
       })
       .then((res) => {
         setUser(res?.data[0]);
-        if (res?.data[0]?._id) {
+        if (res?.data[0]?.accessToken) {
           setIsLoggedIn(true);
         }
       })
       .catch((err) => {
         console.log(err);
+      })
+      .finally(() => {
+        setLoading(false);
       });
   };
 
@@ -60,7 +64,9 @@ const App = () => {
 
       <main className="flex flex-col justify-center items-center mt-20 gap-8">
         <div className="bg-white p-6 shadow-md rounded-lg text-center w-1/2">
-          {isLoggedIn ? (
+          {loading ? (
+            <div>Please wait...</div>
+          ) : isLoggedIn ? (
             <>
               <h1 className="text-xl font-bold text-gray-800">
                 Welcome back to YouClick!

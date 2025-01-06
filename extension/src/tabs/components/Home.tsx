@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 
 function Home() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   const handleLogin = () => {
     // chrome.tabs.create({
@@ -31,6 +32,9 @@ function Home() {
           console.log("Access token removed from storage.");
         });
         window.location.reload();
+      })
+      .finally(() => {
+        setLoading(false);
       });
   };
 
@@ -84,7 +88,9 @@ function Home() {
       {/* Main Content */}
       <main className="flex flex-col justify-center items-center mt-20 gap-8">
         <div className="bg-white p-6 shadow-md rounded-lg text-center w-1/2">
-          {isLoggedIn ? (
+          {loading ? (
+            <div>Please wait...</div>
+          ) : isLoggedIn ? (
             <>
               <h1 className="text-xl font-bold text-gray-800">
                 Welcome back to YouClick!
@@ -93,6 +99,7 @@ function Home() {
                 We're glad to have you logged in. Let's make the most of your
                 time.
               </p>
+
               <button
                 onClick={handleLogout}
                 className="mt-4 bg-red-500 text-white py-2 px-4 rounded-lg hover:bg-red-600 transition-all"
